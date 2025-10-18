@@ -1,0 +1,71 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+provider = "postgresql"
+url      = env("DIRECT_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  username  String?    @unique
+  createdAt DateTime   @default(now())
+  Videos    Video[]
+  Likes     Like[]
+  Comments  Comment[]
+  chats     Chat[]
+  Followers Follower[]   
+}
+
+
+model Video {
+  id         String     @id @default(dbgenerated("uuid_generate_v4()"))
+  title      String
+  uri        String
+  user_id    Int
+  user       User       @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  Likes      Like[]
+  created_at DateTime   @default(now())
+  Comment    Comment[]
+}
+
+
+model Like {
+  id            String   @id @default(dbgenerated("uuid_generate_v4()"))
+  user_id       Int
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  video_id      String
+  video         Video    @relation(fields: [video_id], references: [id], onDelete: Cascade)
+  created_at    DateTime @default(now())
+}
+
+model Follower {
+  id               String   @id @default(dbgenerated("uuid_generate_v4()"))
+  user_id          Int
+  user             User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  follower_user_id Int
+  created_at       DateTime @default(now())
+}
+
+model Chat {
+  id           String   @id @default(dbgenerated("uuid_generate_v4()"))
+  user_id      Int
+  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  chat_user_id Int
+  users_key    String
+  text         String
+  created_at   DateTime @default(now())
+}
+
+model Comment {
+  id         String   @id @default(dbgenerated("uuid_generate_v4()"))
+  text       String
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  video_id   String
+  video      Video    @relation(fields: [video_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+}

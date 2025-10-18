@@ -1,0 +1,20 @@
+diff --git a/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackHeaderConfig.kt b/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackHeaderConfig.kt
+index xxxxxx..yyyyyy 100644
+--- a/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackHeaderConfig.kt
++++ b/node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/ScreenStackHeaderConfig.kt
+@@ -388,7 +388,7 @@ class ScreenStackHeaderConfig(context: Context?) : ViewGroup(context) {
+         val titleColor: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+           titleTextView.textColors.defaultColor
+         } else {
+-          resources.getColor(android.R.attr.textColor)
++          resources.getColor(android.R.color.black)
+         }
+         val title = titleTextView.text.toString()
+         toolbar.title = title
+@@ -396,6 +396,7 @@ class ScreenStackHeaderConfig(context: Context?) : ViewGroup(context) {
+         toolbar.setTitleTextColor(titleColor)
+       }
++    }
+ }
+ 
+ private fun Toolbar.getActionView(view: View): ActionView? {
